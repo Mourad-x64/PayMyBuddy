@@ -20,28 +20,28 @@ public class SecurityConfiguration {
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
+
         return new BCryptPasswordEncoder();
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        http.authorizeRequests().antMatchers("/login").permitAll()
-                .antMatchers("/users/**", "/settings/**").hasAuthority("Admin")
-                .hasAnyAuthority("Admin", "Editor", "Salesperson")
-                .hasAnyAuthority("Admin", "Editor", "Salesperson", "Shipper")
-                .anyRequest().authenticated()
-                .and().formLogin()
-                .loginPage("/login")
-                .usernameParameter("email")
-                .permitAll()
-                .and()
-                .rememberMe().key("AbcdEfghIjklmNopQrsTuvXyz_0123456789")
-                .and()
-                .logout().permitAll();
-
-        http.headers().frameOptions().sameOrigin();
-
+        http.authorizeHttpRequests((authorize) ->
+                        authorize.requestMatchers("/register/**").permitAll()
+                                .requestMatchers("/index").permitAll()
+                                .requestMatchers("/users").hasRole("ADMIN")
+                ).formLogin(
+                        form -> form
+                                .loginPage("/login")
+                                .loginProcessingUrl("/login")
+                                .defaultSuccessUrl("/users")
+                                .permitAll()
+                ).logout(
+                        logout -> logout
+                                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                                .permitAll()
+                );
         return http.build();
     }
 
