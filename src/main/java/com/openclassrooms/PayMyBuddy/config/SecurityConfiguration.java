@@ -14,9 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+
 
 @Configuration
 @EnableWebSecurity
@@ -30,22 +28,20 @@ public class SecurityConfiguration {
 
 
 
-
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http.authorizeHttpRequests((authorize) ->
                         authorize
-                                .requestMatchers("/login").permitAll()
-                                .requestMatchers("/login").hasAnyRole("USER", "ADMIN")
-                                .requestMatchers("/index").permitAll()
-                                .requestMatchers("/index").hasAnyRole("USER", "ADMIN")
+                                .requestMatchers("/register").permitAll()
+                                .requestMatchers("/","/index").permitAll()
+                                .anyRequest().authenticated()
 
                 ).formLogin(
                         form -> form
                                 .loginPage("/login")
                                 .loginProcessingUrl("/login")
+                                .defaultSuccessUrl("/paymybuddy")
                                 .permitAll()
                 ).logout(
                         logout -> logout

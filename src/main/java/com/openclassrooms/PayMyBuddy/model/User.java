@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -18,7 +19,17 @@ public class User implements UserDetails {
     @GeneratedValue
     private Long id;
 
+    @OneToMany
+    @JoinColumn(name = "contact_id")
+    private List<Contact> contacts;
+
+    private String firstname;
+
+    private String lastname;
+
+    private String eMail;
     private String username;
+
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -78,6 +89,30 @@ public class User implements UserDetails {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public String geteMail() {
+        return eMail;
+    }
+
+    public void seteMail(String eMail) {
+        this.eMail = eMail;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 }
 
