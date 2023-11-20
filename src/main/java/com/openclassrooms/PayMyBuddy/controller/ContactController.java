@@ -33,7 +33,12 @@ public class ContactController {
     }
 
     @GetMapping("/contact")
-    String contact() {
+    String contact(Model model) {
+        //fetch all contacts
+        model.addAttribute("contacts", userService.getAllContacts());
+        // create model object to store form data
+        ContactDto contact = new ContactDto();
+        model.addAttribute("postedContact", contact);
         return "contact";
     }
 

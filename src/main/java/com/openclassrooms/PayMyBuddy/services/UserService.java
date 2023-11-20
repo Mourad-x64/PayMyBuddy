@@ -1,5 +1,6 @@
 package com.openclassrooms.PayMyBuddy.services;
 
+import com.openclassrooms.PayMyBuddy.model.Contact;
 import com.openclassrooms.PayMyBuddy.model.User;
 import com.openclassrooms.PayMyBuddy.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,10 @@ public class UserService {
 
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
+    }
+
+    public List<Contact> getAllContacts(User user){
+
     }
 }
 
