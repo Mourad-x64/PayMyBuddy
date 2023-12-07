@@ -1,9 +1,13 @@
 package com.openclassrooms.PayMyBuddy.model.dto;
 
-public class ContactDto {
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
 
+public class FriendshipDto {
+
+    @Email
+    @NotEmpty
     private String email;
-
 
     public String getEmail() {
         return email;

@@ -35,6 +35,7 @@ public class SecurityConfiguration {
                         authorize
                                 .requestMatchers("/register").permitAll()
                                 .requestMatchers("/","/index").permitAll()
+                                .requestMatchers("/admin").hasRole("ADMIN")
                                 .anyRequest().authenticated()
 
                 ).formLogin(

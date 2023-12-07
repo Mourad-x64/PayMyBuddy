@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+  <meta charset="UTF-8">
+  <title>Friends</title>
+  <!-- Bootstrap 5 CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+  <!-- Data Table CSS -->
+  <link rel='stylesheet' href='https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css'>
+  <!-- Font Awesome CSS -->
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css'>
+  <!-- Custom style -->
+  <link rel="stylesheet" type="text/css" media="all"  th:href="@{/static/style.css}">
+
+</head>
+<body>
+
+  <div class="row col-md-8 offset-md-2">
+
+    <div th:replace="~{/navbar::topbar}"></div>
+
+    <div th:if="${param.success}">
+      <div class="alert alert-info">
+        Friend added !
+      </div>
+    </div>
+    <div th:if="${param.deleted}">
+      <div class="alert alert-info">
+        Friend deleted !
+      </div>
+    </div>
+    <div th:if="${param.error}">
+      <div class="alert alert-danger">
+        error !
+      </div>
+    </div>
+
+    <div class="container mt-5">
+
+    <form class="row g-3"
+          method="post"
+          role="form"
+          th:action="@{/friends}"
+          th:object="${postedFriend}"
+          autocomplete="off"
+    >
+      <div class="col-auto">
+        <label for="email" class="visually-hidden">Email</label>
+        <input
+                class="form-control"
+                id="email"
+                name="email"
+                placeholder="Enter email address"
+                th:field="*{email}"
+                type="text"
+        >
+        <p th:errors = "*{email}" class="text-danger"
+           th:if="${#fields.hasErrors('email')}"></p>
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary mb-3">Add</button>
+      </div>
+    </form>
+
+    </div>
+
+
+    <div class="container mt-5" th:if="${#lists.isEmpty(friends)}">
+      <br/>
+      <h1 class="text-center">no friends !</h1>
+    </div>
+
+
+    <div  class="container mt-5" th:if="${not#lists.isEmpty(friends)}">
+      <table id="friends" class="table table-striped">
+        <thead>
+          <tr>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>email</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="friend : ${friends}">
+            <td th:text="${friend.firstname}"></td>
+            <td th:text="${friend.lastname}"></td>
+            <td th:text="${friend.eMail}"></td>
+            <td align="right"><a th:href="@{/friends/delete/{id}(id = ${friend.id})}">Delete</a></td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th>FirstName</th>
+            <th>LastName</th>
+            <th>email</th>
+            <th>Action</th>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+
+  </div>
+</div>
+
+  <!-- jQuery -->
+  <script src='https://code.jquery.com/jquery-3.7.0.js'></script>
+  <!-- Data Table JS -->
+  <script src='https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js'></script>
+  <script src='https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js'></script>
+  <script src='https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js'></script>
+  <!-- Custom js -->
+  <script type="text/javascript">
+    $(document).ready(function() {
+    $('#friends').DataTable({
+      //disable sorting on last column
+      "columnDefs": [
+        { "orderable": false, "targets": 3 }
+      ],
+      language: {
+        //customize pagination prev and next buttons: use arrows instead of words
+        'paginate': {
+          'previous': '<span class="fa fa-chevron-left"></span>',
+          'next': '<span class="fa fa-chevron-right"></span>'
+        },
+        //customize number of elements to be displayed
+        "lengthMenu": 'Display <select class="form-control input-sm">'+
+        '<option value="10">10</option>'+
+        '<option value="20">20</option>'+
+        '<option value="30">30</option>'+
+        '<option value="40">40</option>'+
+        '<option value="50">50</option>'+
+        '<option value="-1">All</option>'+
+        '</select> results'
+      }
+    })
+} );
+  </script>
+
+</body>
+</html>

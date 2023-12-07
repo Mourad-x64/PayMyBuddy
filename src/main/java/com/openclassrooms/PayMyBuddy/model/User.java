@@ -1,6 +1,7 @@
 package com.openclassrooms.PayMyBuddy.model;
 
 import jakarta.persistence.*;
+import org.hibernate.validator.constraints.Currency;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,12 +17,14 @@ public class User implements UserDetails {
 
     @Id
     @Column(name = "user_id")
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany
-    @JoinColumn(name = "contact_id")
-    private List<Contact> contacts;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "src")
+    private List<Friendship> friendships;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "from")
+    private List<Transaction> transactions;
 
     private String firstname;
 
@@ -33,6 +36,7 @@ public class User implements UserDetails {
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
+    private Double balance;
 
     public Long getId() {
         return id;
@@ -113,6 +117,30 @@ public class User implements UserDetails {
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
+    }
+
+    public List<Friendship> getFriendships() {
+        return friendships;
+    }
+
+    public void setFriendships(List<Friendship> friendships) {
+        this.friendships = friendships;
+    }
+
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions = transactions;
+    }
+
+    public Double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(Double balance) {
+        this.balance = balance;
     }
 }
 

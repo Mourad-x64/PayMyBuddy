@@ -1,6 +1,6 @@
 package com.openclassrooms.PayMyBuddy.services;
 
-import com.openclassrooms.PayMyBuddy.model.Contact;
+import com.openclassrooms.PayMyBuddy.model.Friendship;
 import com.openclassrooms.PayMyBuddy.model.User;
 import com.openclassrooms.PayMyBuddy.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +32,10 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public List<Contact> getAllContacts(User user){
-
+    public User save(User user){
+        return userRepository.save(user);
     }
+
 }
 
 

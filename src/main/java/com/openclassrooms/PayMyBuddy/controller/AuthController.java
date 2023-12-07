@@ -4,8 +4,12 @@ import com.openclassrooms.PayMyBuddy.model.User;
 import com.openclassrooms.PayMyBuddy.model.dto.UserDto;
 import com.openclassrooms.PayMyBuddy.services.CustomUserDetailsService;
 import com.openclassrooms.PayMyBuddy.services.UserService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,7 +40,10 @@ class AuthController {
     }
 
     @GetMapping("/login")
-    String login() {
+    String login(HttpServletRequest request, HttpServletResponse response, Authentication auth) {
+        Cookie cookie = new Cookie("email", "toto");
+        response.addCookie(cookie);
+
         return "login";
     }
 
