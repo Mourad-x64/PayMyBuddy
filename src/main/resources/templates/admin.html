@@ -23,13 +23,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" th:href="@{/paymybuddy}">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" th:href="@{/transfer}">Revenue</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" th:href="@{/profile}">Profile</a>
+            <a class="nav-link active" aria-current="page" th:href="@{/admin}">Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" th:href="@{/logout}">logout</a>
@@ -39,6 +33,10 @@
     </div>
   </nav>
 
+  <br/>
+  <br/>
+  <h1 class="text-center">App revenue :</h1>
+  <h1 class="text-center" th:text="${revenue}+' $'"></h1>
 
 </div>
 

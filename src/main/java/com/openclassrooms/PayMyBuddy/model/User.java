@@ -34,8 +34,8 @@ public class User implements UserDetails {
     private String username;
 
     private String password;
-    @Enumerated(EnumType.STRING)
-    private Role role;
+
+    private String role;
     private Double balance;
 
     public Long getId() {
@@ -76,7 +76,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+        return List.of(new SimpleGrantedAuthority(role));
     }
 
     public String getPassword() {
@@ -87,11 +87,11 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public Role getRole() {
+    public String getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(String role) {
         this.role = role;
     }
 

@@ -40,9 +40,7 @@ class AuthController {
     }
 
     @GetMapping("/login")
-    String login(HttpServletRequest request, HttpServletResponse response, Authentication auth) {
-        Cookie cookie = new Cookie("email", "toto");
-        response.addCookie(cookie);
+    String login() {
 
         return "login";
     }
