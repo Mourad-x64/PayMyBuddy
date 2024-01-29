@@ -8,31 +8,34 @@
   <!-- Bootstrap 5 CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
 
+  <!-- Custom style -->
+  <link rel="stylesheet" type="text/css" media="all"  th:href="@{/static/style.css}">
+
 </head>
 <body>
 <div class="row col-md-8 offset-md-2">
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="topbar">
+<nav class="navbar navbar-expand-lg navbar-dark bg-light" th:fragment="topbar">
   <div class="container-fluid">
-    <a class="navbar-brand" th:href="@{/index}">PayMyBuddy</a>
+    <a class="navbar-brand rounded p-2 bg-success" th:href="@{/index}">PayMyBuddy</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" th:href="@{/paymybuddy}">Home</a>
+          <a class="nav-link active text-secondary" aria-current="page" th:href="@{/paymybuddy}">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" th:href="@{/transfer}">Transfer</a>
+          <a class="nav-link active text-secondary" aria-current="page" th:href="@{/transfer}">Transfer</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" th:href="@{/profile}">Profile</a>
+          <a class="nav-link active text-secondary" aria-current="page" th:href="@{/profile}">Profile</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" th:href="@{/friends}">Friends</a>
+          <a class="nav-link active text-secondary" aria-current="page" th:href="@{/friends}">Friends</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" th:href="@{/logout}">logout</a>
+          <a class="nav-link active text-secondary" aria-current="page" th:href="@{/logout}">logout</a>
         </li>
       </ul>
     </div>

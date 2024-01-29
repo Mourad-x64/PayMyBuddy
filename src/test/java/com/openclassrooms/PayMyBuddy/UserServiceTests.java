@@ -43,7 +43,7 @@ public class UserServiceTests {
 
         User user = new User();
 
-        double balance = 2000;
+        float balance = 2000;
 
         user.setUsername("titi@titi.fr");
         user.setFirstname("titi");

@@ -30,9 +30,9 @@ public class TransactionService {
         User friend = null;
         User user = null;
         Transaction transaction = new Transaction();
-        double amount = transactionDto.getAmount();
-        double commission = 0;
-        double totalAmount = 0;
+        float amount = transactionDto.getAmount();
+        float commission = 0;
+        float totalAmount = 0;
 
         Optional<User> optFriend = userService.findByEmail(transactionDto.getEmail());
         if(optFriend.isPresent()){
@@ -48,10 +48,10 @@ public class TransactionService {
         commission = (amount * Fee.FEE_RATE)/100;
 
         //update user balance
-        user.setBalance(Math.round((user.getBalance()-totalAmount) * 100.0) / 100.0);
+        user.setBalance(Math.round((user.getBalance()-totalAmount) * 100) / 100);
         userService.save(user);
         //update friend balance
-        friend.setBalance(Math.round((friend.getBalance()+totalAmount) * 100.0) / 100.0);
+        friend.setBalance(Math.round((friend.getBalance()+totalAmount) * 100) / 100);
         userService.save(friend);
 
         transaction.setAmount(amount);

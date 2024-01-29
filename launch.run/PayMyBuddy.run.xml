@@ -1,0 +1,13 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="PayMyBuddy" type="Application" factoryName="Application">
+    <envs>
+      <env name="username" value="root" />
+      <env name="password" value="root" />
+    </envs>
+    <option name="MAIN_CLASS_NAME" value="com.openclassrooms.PayMyBuddy.PayMyBuddyApplication" />
+    <module name="PayMyBuddy" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

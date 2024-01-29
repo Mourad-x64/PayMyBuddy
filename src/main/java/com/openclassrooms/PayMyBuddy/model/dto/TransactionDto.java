@@ -2,7 +2,7 @@ package com.openclassrooms.PayMyBuddy.model.dto;
 
 public class TransactionDto {
     private String email;
-    private Double amount;
+    private float amount;
 
     private String description;
 
@@ -14,11 +14,11 @@ public class TransactionDto {
         this.email = email;
     }
 
-    public Double getAmount() {
+    public float getAmount() {
         return amount;
     }
 
-    public void setAmount(Double amount) {
+    public void setAmount(float amount) {
         this.amount = amount;
     }
 

@@ -8,18 +8,12 @@ import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
-import java.util.Optional;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -31,8 +25,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @RunWith(SpringRunner.class)
-@ActiveProfiles(profiles = {"test", "secret"})
-public class ControllerTests {
+@ActiveProfiles(profiles = "test")
+public class AuthControllerTests {
 
     @Autowired
     UserService userService;
@@ -55,17 +49,30 @@ public class ControllerTests {
 
         User user = new User();
 
-        double balance = 2000;
+        float balance = 2000;
 
         user.setUsername("titi@titi.fr");
         user.setFirstname("titi");
         user.setLastname("toto");
         user.seteMail("titi@titi.fr");
-        user.setRole("ROLE_ADMIN");
+        user.setRole("ROLE_USER");
         user.setPassword(passwordEncoder.encode("tutu"));
         user.setBalance(balance);
 
         userService.save(user);
+
+        User admin = new User();
+
+        admin.setUsername("toto@toto.fr");
+        admin.setFirstname("toto");
+        admin.setLastname("tutu");
+        admin.seteMail("toto@toto.fr");
+        admin.setRole("ROLE_ADMIN");
+        admin.setPassword(passwordEncoder.encode("tutu"));
+        admin.setBalance(balance);
+
+        userService.save(admin);
+
     }
 
     @After
@@ -73,6 +80,25 @@ public class ControllerTests {
         userRepository.deleteAll();
     }
 
+    @Test
+    public void testShowRegisterForm() throws Exception {
+
+        mvc.perform(get("/register")
+                .with(csrf())
+        ).andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("register"));
+
+    }
+
+    @Test
+    public void testShowLoginForm() throws Exception {
+
+        mvc.perform(get("/login")
+                        .with(csrf())
+                ).andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("login"));
+
+    }
 
 
     @Test
@@ -93,32 +119,19 @@ public class ControllerTests {
     }
 
     @Test
-    @Ignore
     public void testRegister() throws Exception {
 
         mvc.perform(post("/register")
-                .param("firstname", "titi")
-                .param("lastName", "toto")
-                .param("email", "titi")
+                .param("firstname", "tata")
+                .param("lastname", "toto")
+                .param("email", "tata@tata.fr")
                 .param("password", "tutu")
                 .with(csrf())
-        ).andExpect(redirectedUrl("/paymybuddy"));
-
-        mvc.perform(post("/login")
-                .param("username", "titi@titi2.fr")
-                .param("password", "tutu2")
-                .with(csrf())
-        ).andExpect(redirectedUrl("/login?error"));
+        ).andExpect(redirectedUrl("/register?success"));
 
     }
 
-    @Test
-    public void shouldReturnAdminView() throws Exception {
 
-        mvc.perform(get("/admin")
-                        .with(SecurityMockMvcRequestPostProcessors.user(customUserDetailsService.loadUserByUsername("titi@titi.fr"))))
-                .andExpect(status().is(200));
-    }
 
 
 

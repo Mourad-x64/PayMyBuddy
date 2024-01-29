@@ -1,5 +1,6 @@
 package com.openclassrooms.PayMyBuddy;
 
+import com.openclassrooms.PayMyBuddy.model.Fee;
 import com.openclassrooms.PayMyBuddy.model.Transaction;
 import com.openclassrooms.PayMyBuddy.model.User;
 import com.openclassrooms.PayMyBuddy.model.dto.TransactionDto;
@@ -7,10 +8,7 @@ import com.openclassrooms.PayMyBuddy.repositories.TransactionRepository;
 import com.openclassrooms.PayMyBuddy.repositories.UserRepository;
 import com.openclassrooms.PayMyBuddy.services.TransactionService;
 import com.openclassrooms.PayMyBuddy.services.UserService;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,7 +20,7 @@ import java.util.Optional;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-@ActiveProfiles(value = "test")
+@ActiveProfiles(profiles = "test")
 public class TransactionServiceTests {
 
     @Autowired
@@ -40,6 +38,7 @@ public class TransactionServiceTests {
     @Before
     public void initUsers() {
 
+        transactionRepository.deleteAll();
         cleanUsers();
 
         User user = new User();
@@ -50,7 +49,7 @@ public class TransactionServiceTests {
         user.seteMail("titi@titi.fr");
         user.setRole("ROLE_USER");
         user.setPassword(passwordEncoder.encode("tutu"));
-        user.setBalance(2500.00);
+        user.setBalance(2500);
 
         userService.save(user);
 
@@ -62,7 +61,7 @@ public class TransactionServiceTests {
         friend.seteMail("toto@toto.fr");
         friend.setRole("ROLE_USER");
         friend.setPassword(passwordEncoder.encode("tutu"));
-        friend.setBalance(3800.00);
+        friend.setBalance(3800);
 
         userService.save(friend);
 
@@ -76,21 +75,67 @@ public class TransactionServiceTests {
     }
 
     @Test
+
     public void testDoTransaction(){
 
+        float amount = 25;
+        String userMail = "titi@titi.fr";
+        String friendMail = "toto@toto.fr";
+        User user = null;
+        User friend = null;
+
+        //initialisation de la transaction
         TransactionDto transactionDto = new TransactionDto();
-        transactionDto.setAmount(25.00);
-        transactionDto.setEmail("toto@toto.fr");
+        transactionDto.setAmount(amount);
+        transactionDto.setEmail(friendMail);
         transactionDto.setDescription("restaurant");
 
-        String userMail = "titi@titi.fr";
 
+        //on récuperre l'user
+        Optional<User> optUser = userService.findByEmail(userMail);
+        if(optUser.isPresent()){
+            user = optUser.get();
+        }
+        //on récupèrre le friend
+        Optional<User> optFriend = userService.findByEmail(friendMail);
+        if(optFriend.isPresent()){
+            friend = optFriend.get();
+        }
+
+        float userBalanceBeforeTransaction = user.getBalance();
+        float friendBalanceBeforeTransaction = friend.getBalance();
+
+        //do transaction
         Transaction transaction = transactionService.doTransaction(transactionDto, userMail);
 
-        Optional<Transaction> optDbTransaction = transactionRepository.getByAmount(25.00);
+
+        //on récuperre l'user apres la transaction
+        Optional<User> optUser2 = userService.findByEmail(userMail);
+        if(optUser2.isPresent()){
+            user = optUser2.get();
+        }
+        //on récupèrre le friend apres la transaction
+        Optional<User> optFriend2 = userService.findByEmail(friendMail);
+        if(optFriend2.isPresent()){
+            friend = optFriend2.get();
+        }
+
+
+        float userBalanceAfterTransaction = user.getBalance();
+        float friendBalanceAfterTransaction = friend.getBalance();
+
+        Optional<Transaction> optDbTransaction = transactionRepository.getByFrom(user);
+
         //test si la transaction est créee
         Assert.assertTrue(optDbTransaction.isPresent());
 
+        float userCurrentBalance = userBalanceBeforeTransaction - (amount + ((amount * Fee.FEE_RATE/100)));
+        float friendCurrentBalance = friendBalanceBeforeTransaction + amount;
+
+        //check si le montant à bien été retranché à l'user
+        Assert.assertEquals(userBalanceAfterTransaction,userCurrentBalance, 1);
+        //check si le montant à bien été ajouté au friend
+        Assert.assertEquals(friendBalanceAfterTransaction,friendCurrentBalance, 1);
     }
 
 }

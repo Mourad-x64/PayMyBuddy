@@ -36,7 +36,7 @@ public class User implements UserDetails {
     private String password;
 
     private String role;
-    private Double balance;
+    private float balance;
 
     public Long getId() {
         return id;
@@ -135,11 +135,11 @@ public class User implements UserDetails {
         this.transactions = transactions;
     }
 
-    public Double getBalance() {
+    public float getBalance() {
         return balance;
     }
 
-    public void setBalance(Double balance) {
+    public void setBalance(float balance) {
         this.balance = balance;
     }
 }
