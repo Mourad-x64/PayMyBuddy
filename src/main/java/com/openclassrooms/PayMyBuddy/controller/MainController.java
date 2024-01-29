@@ -29,8 +29,7 @@ public class MainController {
      }
 
     @GetMapping("/paymybuddy")
-    String paymybuddy(Model model,Authentication auth, HttpServletResponse response) {
-
+    String paymybuddy(Model model,Authentication auth) {
 
         String email = auth.getName();
         User user = null;

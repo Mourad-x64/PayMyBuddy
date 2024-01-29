@@ -41,7 +41,8 @@ public class SecurityConfiguration {
                                 .requestMatchers("/admin").hasRole("ADMIN")
                                 .anyRequest().authenticated()
 
-                ).formLogin(
+                )
+                .formLogin(
                         form -> form
                                 .loginPage("/login")
                                 .loginProcessingUrl("/login")
