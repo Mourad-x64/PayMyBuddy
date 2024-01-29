@@ -25,9 +25,10 @@ public class SecurityConfiguration {
     @Autowired
     private UserDetailsService userDetailsService;
 
-    @Autowired
-    PasswordEncoder passwordEncoder;
-
+    @Bean
+    public static PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
 
 
     @Bean
@@ -60,7 +61,7 @@ public class SecurityConfiguration {
 
         auth
                 .userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder);
+                .passwordEncoder(passwordEncoder());
     }
 
 
