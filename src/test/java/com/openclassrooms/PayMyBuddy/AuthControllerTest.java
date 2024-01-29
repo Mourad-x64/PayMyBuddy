@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @RunWith(SpringRunner.class)
 @ActiveProfiles(profiles = "test")
-public class AuthControllerTests {
+public class AuthControllerTest {
 
     @Autowired
     UserService userService;

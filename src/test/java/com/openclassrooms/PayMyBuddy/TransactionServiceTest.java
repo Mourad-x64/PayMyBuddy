@@ -21,7 +21,7 @@ import java.util.Optional;
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @ActiveProfiles(profiles = "test")
-public class TransactionServiceTests {
+public class TransactionServiceTest {
 
     @Autowired
     UserService userService;
@@ -75,7 +75,6 @@ public class TransactionServiceTests {
     }
 
     @Test
-
     public void testDoTransaction(){
 
         float amount = 25;

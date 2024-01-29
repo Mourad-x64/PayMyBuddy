@@ -23,7 +23,7 @@ import java.util.Optional;
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @ActiveProfiles(value = "test")
-public class UserServiceTests {
+public class UserServiceTest {
 
     @Autowired
     UserService userService;
@@ -32,8 +32,6 @@ public class UserServiceTests {
 
     @Autowired
     PasswordEncoder passwordEncoder;
-
-
 
 
     @Before
