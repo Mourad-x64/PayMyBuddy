@@ -67,7 +67,7 @@ public class TransferController {
     String addTransaction(@ModelAttribute("postedTransaction") @Valid TransactionDto postedTransaction, BindingResult result, Model model, Authentication auth) {
         User user = null;
         User friend = null;
-        double totalAmount = postedTransaction.getAmount()+(postedTransaction.getAmount() * Fee.FEE_RATE)/100;
+        float totalAmount = postedTransaction.getAmount()+(postedTransaction.getAmount() * Fee.FEE_RATE)/100;
         List<User> friends = new ArrayList<>();
 
 

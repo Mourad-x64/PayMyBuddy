@@ -23,6 +23,72 @@
       this mail is already used !
     </div>
   </div>
+  <div th:if="${param.transferToBankSuccess}">
+    <div class="alert alert-info">
+      Transfer success !
+    </div>
+  </div>
+  <div th:if="${param.transferToBankError}">
+    <div class="alert alert-danger">
+      Transfer error !
+    </div>
+  </div>
+  <div th:if="${param.transferNotEnoughMoney}">
+    <div class="alert alert-danger">
+      Not enough money in your balance !
+    </div>
+  </div>
+
+  <div class="container border mt-5 p-2">
+
+    <form class="row g-3 mt-2"
+          method="post"
+          role="form"
+          th:action="@{/profile/toBank}"
+          th:object="${postedTransferToBank}"
+          autocomplete="off">
+
+      <div class="col-auto">
+        <span>Your Bank Acount : N° M562 485 6252 005</span>
+
+      </div>
+
+      <div class="col-auto">
+        <input  type="number" th:field="*{transferToOrFromBank}" min="10" max="5000" style="width:100px" class="form-control" id="toBank" placeholder="0" required>
+      </div>
+      <div class="col-auto">
+        <button  type="submit" class="btn btn-primary mb-3" >Transfer to Bank Account</button>
+      </div>
+
+    </form>
+
+  </div>
+
+
+  <div class="container border mt-5 p-2">
+
+    <form class="row g-3 mt-2"
+          method="post"
+          role="form"
+          th:action="@{/profile/fromBank}"
+          th:object="${postedTransferFromBank}"
+          autocomplete="off">
+
+      <div class="col-auto">
+        <span>Your Balance :</span>
+        <span th:text="${balance}+' $'"></span>
+      </div>
+
+      <div class="col-auto">
+        <input  type="number" th:field="*{transferToOrFromBank}" min="10" max="5000" style="width:100px" class="form-control" id="fromBank" placeholder="0" required>
+      </div>
+      <div class="col-auto">
+        <button  type="submit" class="btn btn-primary mb-3" >Transfer From Bank Account</button>
+      </div>
+
+    </form>
+
+  </div>
 
 
   <div class="container border mt-5 p-2">

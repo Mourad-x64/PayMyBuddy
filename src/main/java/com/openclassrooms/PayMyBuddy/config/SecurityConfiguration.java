@@ -46,14 +46,14 @@ public class SecurityConfiguration {
                         form -> form
                                 .loginPage("/login")
                                 .loginProcessingUrl("/login")
-                                //.defaultSuccessUrl("/paymybuddy")
                                 .successHandler(new CustomAuthenticationSuccessHandler())
                                 .permitAll()
                 ).logout(
                         logout -> logout
                                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                                 .permitAll()
-                );
+                ).rememberMe();
+
         return http.build();
     }
 
