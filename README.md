@@ -35,15 +35,15 @@ THYMELEAFE 3.1.2
 
 **_MPD :_**
 
-![](../../projet 6/MPD.jpg)
+![](Livrables/MPD.jpg)
 
 **_UML :_**
 
-![](../../projet 6/UML.jpg)
+![](Livrables/UML.jpg)
 
 Login :
 
-![](../../projet 6/Capture.JPG)
+![](Livrables/Capture.JPG)
 
 
 **_Couverture de tests :_**
