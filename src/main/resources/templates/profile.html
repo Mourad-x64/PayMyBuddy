@@ -54,7 +54,7 @@
       </div>
 
       <div class="col-auto">
-        <input  type="number" th:field="*{transferToOrFromBank}" min="10" max="5000" style="width:100px" class="form-control" id="toBank" placeholder="0" required>
+        <input  type="number" th:field="*{transferToOrFromBank}" min="10" max="5000" style="width:100px" class="form-control" id="toBank" placeholder="0" required><span> $</span>
       </div>
       <div class="col-auto">
         <button  type="submit" class="btn btn-primary mb-3" >Transfer to Bank Account</button>
@@ -80,7 +80,7 @@
       </div>
 
       <div class="col-auto">
-        <input  type="number" th:field="*{transferToOrFromBank}" min="10" max="5000" style="width:100px" class="form-control" id="fromBank" placeholder="0" required>
+        <input  type="number" th:field="*{transferToOrFromBank}" min="10" max="5000" style="width:100px" class="form-control" id="fromBank" placeholder="0" required><span> $</span>
       </div>
       <div class="col-auto">
         <button  type="submit" class="btn btn-primary mb-3" >Transfer From Bank Account</button>
