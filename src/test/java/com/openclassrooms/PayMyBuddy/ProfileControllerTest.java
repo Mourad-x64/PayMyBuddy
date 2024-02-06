@@ -124,4 +124,50 @@ public class ProfileControllerTest {
 
     }
 
+    @Test
+    public void testTransferWithBank() throws Exception {
+
+        User user = null;
+
+        //on récuperre l'user
+        Optional<User> optUser = userService.findByEmail("titi@titi.fr");
+        if(optUser.isPresent()){
+            user = optUser.get();
+        }
+
+        float balance = user.getBalance();
+
+        //transfer 25 to bank
+        mvc.perform(post("/profile/toBank")
+                .with(user("titi@titi.fr").password("tutu").roles("USER","ADMIN"))
+                .param("transferToOrFromBank", "25")
+                .with(csrf())
+        ).andExpect(redirectedUrl("/profile?transferToBankSuccess"));
+
+        Optional<User> optUser2 = userService.findByEmail("titi@titi.fr");
+        if(optUser2.isPresent()){
+            user = optUser2.get();
+        }
+
+        Assert.assertEquals((balance-25), user.getBalance(), 0);
+
+        balance = user.getBalance();
+
+        //transfer 25 from bank
+        mvc.perform(post("/profile/fromBank")
+                .with(user("titi@titi.fr").password("tutu").roles("USER","ADMIN"))
+                .param("transferToOrFromBank", "25")
+                .with(csrf())
+        ).andExpect(redirectedUrl("/profile?transferToBankSuccess"));
+
+        Optional<User> optUser3 = userService.findByEmail("titi@titi.fr");
+        if(optUser3.isPresent()){
+            user = optUser3.get();
+        }
+
+        Assert.assertEquals((balance+25), user.getBalance(), 0);
+
+
+    }
+
 }

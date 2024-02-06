@@ -11,9 +11,9 @@ import java.util.Optional;
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
 
     @Query(value = "SELECT SUM(commission) FROM transactions", nativeQuery = true)
-    double findRevenue();
+    float findRevenue();
 
-    Optional<Transaction> getByAmount(double v);
+    Optional<Transaction> getByAmount(float v);
 
     Optional<Transaction> getByFrom(User user);
 }

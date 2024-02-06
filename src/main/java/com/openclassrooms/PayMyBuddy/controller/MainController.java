@@ -49,7 +49,9 @@ public class MainController {
     @GetMapping("/admin")
     String admin(Authentication auth, Model model){
 
-         double revenue = Optional.ofNullable(transactionRepository.findRevenue()).orElse(0.00);
+         float zero = 0;
+
+         float revenue = Optional.ofNullable(transactionRepository.findRevenue()).orElse(zero);
 
         model.addAttribute("revenue", Math.round(revenue * 100.0) / 100.0);
 

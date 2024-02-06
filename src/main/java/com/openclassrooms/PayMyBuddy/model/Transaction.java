@@ -19,11 +19,11 @@ public class Transaction {
     @JoinColumn(name = "to_id")
     private User to;
 
-    private double amount;
+    private float amount;
 
     private String dateCreated;
 
-    private double commission;
+    private float commission;
 
     public String description;
 
@@ -55,7 +55,7 @@ public class Transaction {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(float amount) {
         this.amount = amount;
     }
 
@@ -71,7 +71,7 @@ public class Transaction {
         return commission;
     }
 
-    public void setCommission(double commission) {
+    public void setCommission(float commission) {
         this.commission = commission;
     }
 

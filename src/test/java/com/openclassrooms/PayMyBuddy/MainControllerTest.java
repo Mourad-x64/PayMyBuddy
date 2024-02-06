@@ -61,17 +61,17 @@ public class MainControllerTest {
 
         userService.save(user);
 
-        User friend = new User();
+        User admin = new User();
 
-        friend.setUsername("toto@toto.fr");
-        friend.setFirstname("toto");
-        friend.setLastname("tutu");
-        friend.seteMail("toto@toto.fr");
-        friend.setRole("ROLE_USER");
-        friend.setPassword(passwordEncoder.encode("tutu"));
-        friend.setBalance(3800);
+        admin.setUsername("toto@toto.fr");
+        admin.setFirstname("toto");
+        admin.setLastname("tutu");
+        admin.seteMail("toto@toto.fr");
+        admin.setRole("ROLE_ADMIN");
+        admin.setPassword(passwordEncoder.encode("tutu"));
+        admin.setBalance(3800);
 
-        userService.save(friend);
+        userService.save(admin);
 
 
     }
